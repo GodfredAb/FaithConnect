@@ -15,7 +15,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   <!-- 
     - google font link
@@ -198,8 +198,7 @@
 
             <p class="hero-text">
               Living in FAITH, growing in GRACE
-            </p><hr />
-
+            </p>
 
           </div>
 
@@ -222,10 +221,10 @@
         <div class="container">
 
           <figure class="about-banner">
-            <img src="./assets/images/gettyimages.png.jpg" alt="preaching the sermon">
+            <img src="./assets/images/gettyimages.png.jpg" alt="preaching the sermon" data-aos="fade-right">
           </figure>
 
-          <div class="about-content">
+          <div class="about-content" data-aos="fade-left">
 
             <p class="section-subtitle">About Us</p>
 
@@ -509,6 +508,16 @@
             link.classList.add("active");
         }
     });
+</script>
+
+<script src="node_modules/aos/dist/aos.js"></script>
+<script>
+  AOS.init(
+    {
+        duration: 1000,
+        offset: 100,
+    }
+)
 </script>
 
 </body>
