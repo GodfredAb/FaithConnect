@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Session</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Authentication Check - Runs Immediately -->
+  <script>
+    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'assets/login-signup.html';
+    }
+  </script>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+
+        // Reattach event listeners after loading header dynamically
+        let menuButton = document.querySelector("[data-nav-open-btn]");
+        let navbar = document.querySelector("[data-navbar]");
+        let closeButton = document.querySelector("[data-nav-close-btn]");
+        if (menuButton && navbar && closeButton) {
+          menuButton.addEventListener("click", () => navbar.classList.add("active"));
+          closeButton.addEventListener("click", () => navbar.classList.remove("active"));
+        }
+
+        // Highlight the Live Sessions link when on live.html
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.navbar-link');
+        navLinks.forEach(link => {
+          const linkPage = link.getAttribute('href');
+          if (linkPage === currentPage && linkPage === 'live.html') {
+            link.style.textDecoration = 'underline';
+            link.style.color = '#6b48ff'; // Matching the purple theme from other pages
+          } else {
+            link.style.textDecoration = 'none';
+            link.style.color = ''; // Reset to default
+          }
+        });
+
+        // Attach logout functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function() {
+            if (confirm('Do you want to log out?')) {
+              localStorage.removeItem('isLoggedIn');
+              window.location.href = 'assets/login-signup.html';
+            }
+          });
+        }
+      });
+  </script>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <main>
+    <article>
+      <section class="live-sessions">
+        <div class="breadcrumb">
+          <p>Home / <span>Live Sessions</span></p>
+        </div>
+        <div class="session-stats">
+          <a href="activelive.html" class="stat-card" target="_blank">
+            <ion-icon name="videocam-outline"></ion-icon>
+            <div>
+              <p>Active Sessions</p>
+              <h2></h2>
+            </div>
+          </a>
+          <div class="stat-card">
+            <ion-icon name="people-outline"></ion-icon>
+            <div>
+              <p>Total Participants</p>
+              <h2>127</h2>
+            </div>
+          </div>
+          <div class="stat-card">
+            <ion-icon name="time-outline"></ion-icon>
+            <div>
+              <p>Average Duration</p>
+              <h2>1.5 hours</h2>
+            </div>
+          </div>
+          <div class="stat-card">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+            <div>
+              <p>Active Chats</p>
+              <h2>24</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

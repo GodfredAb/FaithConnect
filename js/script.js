@@ -4,7 +4,6 @@
  * element toggle function
  */
 
-
 const elemToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
 
@@ -144,3 +143,4 @@ document.addEventListener("DOMContentLoaded", function() {
       submitQuizBtn.style.display = "none";
   }
 });
+
