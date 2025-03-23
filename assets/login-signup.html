@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./../favicon.svg">
+  <title>FaithConnect - Login/Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: hsl(200, 69%, 14%);
+      overflow: hidden;
+    }
+
+    .card {
+      display: flex;
+      width: 98%;
+      height: 95%;
+      max-width: 1200px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .left-section {
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: #1e90ff;
+      margin-bottom: 40px;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .social-login {
+      background-color: #1e90ff;
+      color: white;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .social-login:hover {
+      background-color: #1c86ee;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .submit-btn:hover {
+      background-color: #1c86ee;
+    }
+
+    .toggle-link {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .toggle-link a {
+      color: #1e90ff;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .toggle-link a:hover {
+      text-decoration: underline;
+    }
+
+    .right-section {
+      flex: 1;
+      background: linear-gradient(to bottom right, #1e90ff, #00c4b4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 60px;
+      position: relative;
+    }
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+      background: url('/assets/images/church.png.jpg') no-repeat center;
+      background-size: cover;
+    }
+
+    .right-section h1 {
+      font-size: 48px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .right-section p {
+      font-size: 22px;
+      text-align: center;
+      max-width: 500px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .error {
+      color: #ff0000;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="left-section">
+      <div class="logo">FaithConnect</div>
+      <div class="form-container">
+        <div id="signupForm">
+          <h2>Create an account</h2>
+          <button type="button" class="social-login" onclick="handleIGoogleSignup()">Sign in with iCloud</button>
+          <div class="form-group">
+            <input type="email" id="signupEmail" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="signupPassword" placeholder="Password" required>
+          </div>
+          <button type="button" class="submit-btn" onclick="handleSignup()">Get Started</button>
+          <p class="error" id="signupError"></p>
+          <div class="toggle-link">
+            <p>Already have an account? <a onclick="showLogin()">Log In</a></p>
+          </div>
+        </div>
+        <div id="loginForm" style="display: none;">
+          <h2>Log In</h2>
+          <button type="button" class="social-login" onclick="handleGoogleLogin()">Sign in with google</button>
+          <div class="form-group">
+            <input type="email" id="loginEmail" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="loginPassword" placeholder="Password" required>
+          </div>
+          <button type="button" class="submit-btn" onclick="handleLogin()">Log In</button>
+          <p class="error" id="loginError"></p>
+          <div class="toggle-link">
+            <p>Need an account? <a onclick="showSignup()">Create an account</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="background-image"></div>
+      <h1>FaithConnect</h1>
+      <p>Connect with your community. Share events, sermons, and updates seamlessly.</p>
+    </div>
+  </div>
+
+  <script>
+    function showSignup() {
+      document.getElementById('signupForm').style.display = 'block';
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupError').style.display = 'none';
+      document.getElementById('loginError').style.display = 'none';
+    }
+
+    function showLogin() {
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('signupError').style.display = 'none';
+      document.getElementById('loginError').style.display = 'none';
+    }
+
+    function handleGoogleSignup() {
+      // Mock iCloud signup - set logged in and redirect
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = '/index.html';
+    }
+
+    function handleGoogleLogin() {
+      // Mock iCloud login - set logged in and redirect
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = '/index.html';
+    }
+
+    function handleSignup() {
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const errorElement = document.getElementById('signupError');
+
+      if (!email || !password) {
+        errorElement.textContent = 'Please fill in all fields.';
+        errorElement.style.display = 'block';
+        return;
+      }
+
+      // Set logged in and redirect
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = '/index.html';
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const errorElement = document.getElementById('loginError');
+
+      if (!email || !password) {
+        errorElement.textContent = 'Please fill in all fields.';
+        errorElement.style.display = 'block';
+        return;
+      }
+
+      // Set logged in and redirect
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = '/index.html';
+    }
+  </script>
+</body>
+</html>
