@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FaithConnect</title>
+
+  <!-- favicon -->
+  <link rel="icon" href="favicon.svg">
+
+  <!-- custom css link -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .church-quiz-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+    }
+    .church-quiz-container h2 {
+      text-align: center;
+      color: #333;
+    }
+    .church-quiz-question {
+      margin-bottom: 20px;
+    }
+    .church-quiz-question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .church-quiz-option {
+      display: block;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .church-quiz-option:hover {
+      background-color: #e9e9e9;
+    }
+    .church-quiz-option.selected {
+      background-color: #d3e0ea;
+    }
+    .church-quiz-feedback {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
+    .church-quiz-button {
+      display: block;
+      width: 150px; /* Adjusted for longer text */
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .church-quiz-button:hover {
+      background-color: #45a049;
+    }
+    .church-quiz-score {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    #quizQuestions, #submitQuiz, #restartQuiz {
+      display: none;
+    }
+  </style>
+
+  <!-- Authentication Check - Runs Immediately -->
+  <script>
+    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'assets/login-signup.html';
+    }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+
+        // Reattach event listeners after loading header dynamically
+        let menuButton = document.querySelector("[data-nav-open-btn]");
+        let navbar = document.querySelector("[data-navbar]");
+        let closeButton = document.querySelector("[data-nav-close-btn]");
+        if (menuButton && navbar && closeButton) {
+          menuButton.addEventListener("click", () => navbar.classList.add("active"));
+          closeButton.addEventListener("click", () => navbar.classList.remove("active"));
+        }
+
+        // Highlight the Quizzes link when on quizzes.html
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.navbar-link');
+        navLinks.forEach(link => {
+          const linkPage = link.getAttribute('href');
+          if (linkPage === currentPage && linkPage === 'quizzes.html') {
+            link.style.textDecoration = 'underline';
+            link.style.color = '#6b48ff'; // Matching the purple theme from other pages
+          } else {
+            link.style.textDecoration = 'none';
+            link.style.color = ''; // Reset to default
+          }
+        });
+
+        // Attach logout functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function() {
+            if (confirm('Do you want to log out?')) {
+              localStorage.removeItem('isLoggedIn');
+              window.location.href = 'assets/login-signup.html';
+            }
+          });
+        }
+      });
+  </script>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <div class="church-quiz-container" id="quizContainer">
+    <h2>Church Quiz</h2>
+    <button class="church-quiz-button" id="startQuiz">Take Quiz</button>
+    <div id="quizQuestions"></div>
+    <button class="church-quiz-button" id="submitQuiz">Submit</button>
+    <button class="church-quiz-button" id="restartQuiz">Take Quiz Again</button>
+    <div class="church-quiz-score" id="quizScore"></div>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/quiz.js"></script>
+</body>
+</html>
