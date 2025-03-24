@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FaithConnect</title>
+
+  <!-- favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- custom css link -->
+  <style>
+    /* Style for the fixed header */
+    #header-placeholder {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1a2a44; /* Matches the dark blue from the image */
+      z-index: 1000; /* Ensures it stays on top of other content */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for depth */
+    }
+
+    /* Adjust the content container to account for the fixed header */
+    .content-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 20px 20px 20px; /* Increased padding-top to fully clear the fixed header */
+      font-family: 'Nunito Sans', sans-serif;
+      background-color: #e8f0e5;
+      min-height: 100vh; /* Ensures the container takes up full viewport height */
+    }
+
+    /* Custom Header */
+    .custom-header {
+      background-color: #a3c9a8;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    .custom-header h1 {
+      font-size: 40px;
+      color: #fff;
+      margin: 0;
+      text-shadow: 2px 2px #6b48ff;
+    }
+
+    .custom-header img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    /* Navigation Links */
+    .nav-links {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #6b48ff;
+      font-size: 16px;
+    }
+
+    /* Main Layout */
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap; /* Allows wrapping on smaller screens */
+      gap: 20px;
+    }
+
+    /* Posts Section */
+    .posts-section {
+      flex: 2;
+      min-width: 0; /* Prevents flex item from overflowing */
+    }
+
+    .post {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .post h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .post img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .post p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .post a {
+      text-decoration: none;
+      color: #6b48ff;
+      font-size: 14px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      flex: 1;
+      min-width: 250px; /* Ensures sidebar doesn’t collapse too much */
+    }
+
+    .sidebar-section {
+      background-color: #a3c9a8;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .sidebar-section h3 {
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-section p {
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .sidebar-section a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .recent-posts h3 {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1a2a44;
+      color: #fff;
+      padding: 20px 0;
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand, .footer-link-box {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+    /* Media Query for Smaller Screens */
+    @media (max-width: 768px) {
+      .content-container {
+        padding-top: 100px; /* Slightly less padding on smaller screens */
+      }
+      .posts-section, .sidebar {
+        flex: 100%; /* Stack vertically on small screens */
+      }
+    }
+  </style>
+
+  <!-- google font link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Authentication Check - Runs Immediately -->
+  <script>
+    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'assets/login-signup.html';
+    }
+  </script>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <script>
+    fetch("header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+
+        // Reattach event listeners after loading header dynamically
+        let menuButton = document.querySelector("[data-nav-open-btn]");
+        let navbar = document.querySelector("[data-navbar]");
+        let closeButton = document.querySelector("[data-nav-close-btn]");
+        if (menuButton && navbar && closeButton) {
+          menuButton.addEventListener("click", () => navbar.classList.add("active"));
+          closeButton.addEventListener("click", () => navbar.classList.remove("active"));
+        }
+
+        // Highlight the Blog link when on blog.html
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.navbar-link');
+        navLinks.forEach(link => {
+          const linkPage = link.getAttribute('href');
+          if (linkPage === currentPage && linkPage === 'blog.html') {
+            link.style.textDecoration = 'underline';
+            link.style.color = '#6b48ff'; // Matching the purple theme from other pages
+          } else {
+            link.style.textDecoration = 'none';
+            link.style.color = ''; // Reset to default
+          }
+        });
+
+        // Attach logout functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function() {
+            if (confirm('Do you want to log out?')) {
+              localStorage.removeItem('isLoggedIn');
+              window.location.href = 'assets/login-signup.html';
+            }
+          });
+        }
+      });
+  </script>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <!-- Blog Page Content -->
+  <div class="content-container">
+    <!-- Custom Header -->
+    <div class="custom-header">
+      <h1>FaithConnect Blog</h1>
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=200&fit=crop" alt="Church Header">
+      <!-- Source: https://unsplash.com/photos/a-church-building-with-a-cross-on-the-top-Ji7lKXcaQ8Y -->
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Sermons</a>
+      <a href="#">Events</a>
+      <a href="#">Community</a>
+      <a href="#">Blog</a>
+    </div>
+
+    <!-- Main Content and Sidebar -->
+    <div class="main-layout">
+      <!-- Main Content -->
+      <div class="posts-section">
+        <!-- Featured Post -->
+        <div class="post">
+          <h2>Walking in Faith: Sermon on Psalm 23</h2>
+          <img src="https://images.pexels.com/photos/372326/pexels-photo-372326.jpeg?w=600&h=400&fit=crop" alt="Sermon Image">
+          <!-- Source: https://www.pexels.com/photo/people-sitting-on-chairs-inside-a-church-372326/ -->
+          <p>
+            Join Pastor David as he explores the comforting words of Psalm 23, guiding us through the valleys and peaks of our spiritual journey. This sermon highlights how the Lord’s presence brings peace and strength to our daily lives.
+          </p>
+          <a href="#">Read More</a>
+        </div>
+
+        <!-- Additional Posts -->
+        <div class="post">
+          <h2>Prayer Revival: A Week of Worship</h2>
+          <img src="https://images.pixabay.com/photo/2017/07/31/18/09/prayer-2558490_1280.jpg?w=600&h=400&fit=crop" alt="Prayer Revival">
+          <!-- Source: https://pixabay.com/photos/prayer-church-worship-religion-2558490/ -->
+          <p>
+            Our recent prayer revival brought the community together for a week of heartfelt worship and intercession. Learn how you can join us next time!
+          </p>
+          <a href="#">Read More</a>
+        </div>
+
+        <div class="post">
+          <h2>Mission Update: Building Hope in Africa</h2>
+          <img src="https://images.unsplash.com/photo-1550831835-d1a5a1ac2d2f?w=600&h=400&fit=crop" alt="Mission Trip">
+          <!-- Source: https://unsplash.com/photos/a-group-of-people-sitting-around-a-table-eating-food-5e5Z9kyB_MM -->
+          <p>
+            Our mission team returned from Africa with stories of hope and transformation. Discover how your support helped build a new community center.
+          </p>
+          <a href="#">Read More</a>
+        </div>
+
+        <div class="post">
+          <h2>Youth Camp 2025: Preparing Hearts</h2>
+          <img src="https://images.pexels.com/photos/15403396/pexels-photo-15403396.jpeg?w=600&h=400&fit=crop" alt="Youth Camp">
+          <!-- Source: https://www.pexels.com/photo/teens-playing-games-at-a-youth-camp-15403396/ -->
+          <p>
+            Get ready for an inspiring week at Youth Camp 2025, where young believers will grow in faith and fellowship. Registration details inside!
+          </p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sponsors Section -->
+        <div class="sidebar-section">
+          <h3>Church Partners</h3>
+          <p>Supporting our ministry:</p>
+          <div style="margin-top: 10px;">
+            <a href="#">Grace Fellowship</a><br>
+            <a href="#">Hope Ministries</a><br>
+            <a href="#">Light of the World</a>
+          </div>
+        </div>
+
+        <!-- Recent Posts -->
+        <div class="recent-posts sidebar-section">
+          <h3>Recent Posts</h3>
+          <p>Youth Camp 2025 Preview</p>
+          <p>Family Day 2024 Highlights</p>
+          <p>Bible Study: Galatians 5</p>
+        </div>
+
+        <!-- Additional Links -->
+        <div class="sidebar-section">
+          <h3>Resources</h3>
+          <a href="#">Prayer Requests</a>
+          <a href="#">Event Calendar</a>
+          <a href="#">Donate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
