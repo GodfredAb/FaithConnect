@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="./../favicon.svg">
-  <title>FaithConnect - Login/Signup</title>               
+  <title>FaithConnect - Login/Signup</title>
+  <!-- <script type="module" src="auth.js"></script> Link Firebase Authentication -->
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
 
@@ -18,250 +19,137 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background-color: #f5f5f5;
     }
 
     .card {
-      display: flex;
-      width: 90%;
-      max-width: 1100px;
-      height: 90%;
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    .left-section {
-      flex: 1;
-      padding: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #f7f9fc;
+      width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
-      font-size: 32px;
-      font-weight: bold;
-      color: #1e90ff;
-      margin-bottom: 40px;
-    }
-
-    .form-container {
-      width: 100%;
-      max-width: 450px;
-    }
-
-    h2 {
-      font-size: 32px;
-      color: #333;
-      margin-bottom: 30px;
       text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     input {
       width: 100%;
-      padding: 14px;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 18px;
-      outline: none;
     }
 
     .submit-btn {
       width: 100%;
-      padding: 14px;
-      background-color: #1e90ff;
+      padding: 10px;
+      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 18px;
-      transition: 0.3s;
-    }
-
-    .submit-btn:hover {
-      background-color: #1c86ee;
-    }
-
-    .toggle-link {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .toggle-link a {
-      color: #1e90ff;
-      text-decoration: none;
-      cursor: pointer;
       font-size: 16px;
     }
 
-    .toggle-link a:hover {
-      text-decoration: underline;
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .toggle-link a {
+      color: #007BFF;
+      cursor: pointer;
     }
 
     .error {
-      color: #ff0000;
+      color: red;
       font-size: 14px;
-      margin-top: 10px;
       text-align: center;
-      display: none;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="left-section">
-      <div class="logo">FaithConnect</div>
-      <div class="form-container">
-        <div id="signupForm">
-          <h2>Create an account</h2>
-          <div class="form-group">
-            <input type="email" id="signupEmail" placeholder="Email" required>
-          </div>
-          <div class="form-group">
-            <input type="password" id="signupPassword" placeholder="Password" required>
-          </div>
-          <button type="button" class="submit-btn" onclick="handleSignup()">Get Started</button>
-          <p class="error" id="signupError"></p>
-          <div class="toggle-link">
-            <p>Already have an account? <a onclick="showLogin()">Log In</a></p>
-          </div>
-        </div>
 
-        <div id="loginForm" style="display: none;">
-          <h2>Log In</h2>
-          <div class="form-group">
-            <input type="email" id="loginEmail" placeholder="Email" required>
-          </div>
-          <div class="form-group">
-            <input type="password" id="loginPassword" placeholder="Password" required>
-          </div>
-          <button type="button" class="submit-btn" onclick="handleLogin()">Log In</button>
-          <p class="error" id="loginError"></p>
-          <div class="toggle-link">
-            <p>Need an account? <a onclick="showSignup()">Create an account</a></p>
-          </div>
-        </div>
+  <div class="card">
+    <div class="logo">FaithConnect</div>
+
+    <!-- Signup Form -->
+    <div id="signupForm">
+      <h2>Create an account</h2>
+      <div class="form-group">
+        <input type="email" id="signupEmail" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="signupPassword" placeholder="Password" required>
+      </div>
+      <button type="button" class="submit-btn" id="signupBtn" onclick="handleSignup()">Get Started</button>
+      <p class="error" id="signupError"></p>
+      <div class="toggle-link">
+        <p>Already have an account? <a onclick="showLogin()">Log In</a></p>
       </div>
     </div>
+
+    <!-- Login Form -->
+    <div id="loginForm" style="display: none;">
+      <h2>Log In</h2>
+      <div class="form-group">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="loginPassword" placeholder="Password" required>
+      </div>
+      <button type="button" class="submit-btn" id="loginBtn" onclick="handleLogin()">Log In</button>
+      <p class="error" id="loginError"></p>
+      <div class="toggle-link">
+        <p>Need an account? <a onclick="showSignup()">Create an account</a></p>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    const API_URL = "http://localhost:5001"; // Update this if needed
-  
+    document.addEventListener("DOMContentLoaded", function () {
+    const user = localStorage.getItem("user");
+    if (user) {
+      window.location.href = "/index.html"; // Redirect if already logged in
+    }
+    });
+
     function showSignup() {
-      console.log("Switching to Signup form");
       document.getElementById('signupForm').style.display = 'block';
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('signupError').textContent = '';
       document.getElementById('loginError').textContent = '';
     }
-  
+
     function showLogin() {
-      console.log("Switching to Login form");
       document.getElementById('loginForm').style.display = 'block';
       document.getElementById('signupForm').style.display = 'none';
       document.getElementById('signupError').textContent = '';
       document.getElementById('loginError').textContent = '';
     }
-  
-    async function handleSignup() {
-      console.log("Signup button clicked");
-  
-      const email = document.getElementById('signupEmail').value.trim();
-      const password = document.getElementById('signupPassword').value.trim();
-      const errorElement = document.getElementById('signupError');
-  
-      if (!email || !password) {
-        errorElement.textContent = 'Please fill in all fields.';
-        return;
-      }
-  
-      try {
-        console.log("Sending signup request...");
-  
-        const response = await fetch(`${API_URL}/signup`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-             
-          },
-          body: JSON.stringify({ email, password })
-        });
-  
-        const data = await response.json();
-        console.log("Signup response:", data);
-  
-        if (!response.ok) {
-          throw new Error(data.error || 'Signup failed. Try again.');
-        }
-  
-        alert("Signup successful! Please log in.");
-        showLogin();
-      } catch (error) {
-        console.error("Signup Error:", error);
-        errorElement.textContent = error.message;
-      }
-    }
-  
-    async function handleLogin() {
-      console.log("Login button clicked");
-  
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      const errorElement = document.getElementById('loginError');
-  
-      if (!email || !password) {
-        errorElement.textContent = 'Please fill in all fields.';
-        return;
-      }
-  
-      try {
-        console.log("Sending login request...");
-  
-        const response = await fetch(`${API_URL}/login`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            "X-Appwrite-Project": "67df74c3000978edaf92"
-          },
-          body: JSON.stringify({ email, password })
-        });
-  
-        const data = await response.json();
-        console.log("Login response:", data);
-  
-        if (!response.ok) {
-          throw new Error(data.error || 'Login failed. Try again.');
-        }
-  
-        // Store session token in localStorage
-        localStorage.setItem("session", JSON.stringify(data.session));
-  
-        alert("Login successful!");
-        window.location.href = "/index.html";
-      } catch (error) {
-        console.error("Login Error:", error);
-        errorElement.textContent = error.message;
-      }
-    }
-  
-    // Ensure buttons are wired correctly
-    document.addEventListener("DOMContentLoaded", function () {
-      console.log("DOM Loaded. Adding event listeners...");
-  
-      document.getElementById('signupBtn')?.addEventListener('click', handleSignup);
-      document.getElementById('loginBtn')?.addEventListener('click', handleLogin);
-    });
   </script>
-  
-  
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="./auth.js"></script>
+<script type="module">
+  import { handleSignup, handleLogin } from "./auth.js";
+
+  document.getElementById("signupBtn")?.addEventListener("click", handleSignup);
+  document.getElementById("loginBtn")?.addEventListener("click", handleLogin);
+</script>
 </body>
 </html>

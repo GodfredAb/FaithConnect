@@ -20,13 +20,7 @@
   <!-- Include Chart.js via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Authentication Check - Runs Immediately -->
-  <script>
-    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
-    if (!localStorage.getItem('isLoggedIn')) {
-      window.location.href = 'assets/login-signup.html';
-    }
-  </script>
+  <script type="module" src="auth.js"></script>
 </head>
 
 <body>

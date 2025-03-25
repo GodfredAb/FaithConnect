@@ -26,14 +26,8 @@
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
-  <!-- Authentication Check - Runs Immediately -->
-  <script>
-    // Check if user is logged in immediately
-    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
-    if (!localStorage.getItem('isLoggedIn')) {
-      window.location.href = 'assets/login-signup.html';
-    }
-  </script>
+
+  <script type="module" src="auth.js"></script>
 </head>
 
 <body>
