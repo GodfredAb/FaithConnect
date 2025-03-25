@@ -199,13 +199,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Authentication Check - Runs Immediately -->
-  <script>
-    console.log('Checking login status:', localStorage.getItem('isLoggedIn')); // Debug log
-    if (!localStorage.getItem('isLoggedIn')) {
-      window.location.href = 'assets/login-signup.html';
-    }
-  </script>
+
+  <script type="module" src="auth.js"></script>
 </head>
 
 <body>
@@ -292,7 +287,7 @@
         <!-- Additional Posts -->
         <div class="post">
           <h2>Prayer Revival: A Week of Worship</h2>
-          <img src="https://images.pixabay.com/photo/2017/07/31/18/09/prayer-2558490_1280.jpg?w=600&h=400&fit=crop" alt="Prayer Revival">
+          <img src="./assets/images/photo-1438232992991-995b7058bbb3.avif">
           <!-- Source: https://pixabay.com/photos/prayer-church-worship-religion-2558490/ -->
           <p>
             Our recent prayer revival brought the community together for a week of heartfelt worship and intercession. Learn how you can join us next time!
@@ -302,7 +297,7 @@
 
         <div class="post">
           <h2>Mission Update: Building Hope in Africa</h2>
-          <img src="https://images.unsplash.com/photo-1550831835-d1a5a1ac2d2f?w=600&h=400&fit=crop" alt="Mission Trip">
+          <img src="./assets/images/preach 2.jpg">
           <!-- Source: https://unsplash.com/photos/a-group-of-people-sitting-around-a-table-eating-food-5e5Z9kyB_MM -->
           <p>
             Our mission team returned from Africa with stories of hope and transformation. Discover how your support helped build a new community center.
